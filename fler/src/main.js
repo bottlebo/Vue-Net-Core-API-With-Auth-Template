@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios';
 
 import './styles/quasar.styl'
 import 'quasar-framework/dist/quasar.ie.polyfills'
@@ -9,7 +10,7 @@ import 'quasar-extras/animate'
 import 'quasar-extras/roboto-font'
 import 'quasar-extras/material-icons'
 import {
-  Quasar, 
+  Quasar,
   QBtn,
   QLayout,
   QLayoutHeader,
@@ -48,7 +49,7 @@ Vue.use(Quasar, {
   },
   plugins: {
   }
- })
+})
 
 Vue.config.productionTip = false
 
@@ -57,3 +58,15 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+//
+axios.interceptors.request.use((config) => {
+
+  const authToken = store.getters['auth/authToken'];
+  if (authToken) {
+    config.headers.Authorization = `Bearer ${authToken}`;
+  }
+  return config;
+}, (err) => {
+  return Promise.reject(err);
+});

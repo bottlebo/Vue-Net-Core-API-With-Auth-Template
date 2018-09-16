@@ -41,7 +41,10 @@
             <q-item-side icon="info_outline" />
             <q-item-main label="About" />
           </q-item>
-
+          <q-item to="/login">
+            <q-item-side icon="info_outline" />
+            <q-item-main label="Login" />
+          </q-item>
           <q-item-separator />
           <q-list-header>Essential Links</q-list-header>
           <q-item @click.native="openURL('http://quasar-framework.org')">
@@ -71,19 +74,19 @@
 </template>
 
 <script>
-import { openURL } from 'quasar'
+import { openURL } from "quasar";
 
 export default {
-  name: 'LayoutDefault',
-  data () {
+  name: "LayoutDefault",
+  data() {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop
-    }
+    };
   },
   methods: {
     openURL
   }
-}
+};
 </script>
 
 <style>
