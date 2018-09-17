@@ -21,11 +21,11 @@
               
               <!-- <Spinner v-bind:show="isBusy" /> -->
               
-
-              <div class="errors-container" v-show="errors">
+              <div class="errors-container">
+              <div v-show="errors">
                  {{errors}}
               </div>
-            
+            </div>
             </q-card-main>
             <q-card-separator />
             <q-card-actions align="end">
@@ -81,5 +81,7 @@ export default {
 }
 .errors-container{
   line-height: 30px;
+  height: 30px;
+  padding-top: 7px;
 }
 </style>
