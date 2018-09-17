@@ -45,8 +45,8 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("API")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly("API")));
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
             // Register the ConfigurationBuilder instance of FacebookAuthSettings
@@ -110,7 +110,7 @@ namespace API
 
             builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
             builder.AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
+            services.AddScoped<RoleManager<IdentityRole>>();
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader()));

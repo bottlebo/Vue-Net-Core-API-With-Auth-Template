@@ -18,31 +18,34 @@ namespace AuthWebApi.Controllers
     {
         private readonly ClaimsPrincipal _caller;
         private readonly ApplicationDbContext _appDbContext;
+        private readonly UserManager<AppUser> _userManager;
 
         public ProfileController(UserManager<AppUser> userManager, ApplicationDbContext appDbContext, IHttpContextAccessor httpContextAccessor)
         {
             _caller = httpContextAccessor.HttpContext.User;
             _appDbContext = appDbContext;
+            _userManager = userManager;
         }
-        /*
+
         // GET api/profile/me
         [HttpGet]
         public async Task<IActionResult> Me()
         {
             // retrieve the user info
             var userId = _caller.Claims.Single(c => c.Type == "id");
-            var customer = await _appDbContext.Customers.Include(c => c.Identity).SingleAsync(c => c.Identity.Id == userId.Value);
-
+            //var customer = await _appDbContext.Customers.Include(c => c.Identity).SingleAsync(c => c.Identity.Id == userId.Value);
+            var user = await _userManager.FindByIdAsync(userId.Value);
             return new OkObjectResult(new
             {
-                customer.Identity.FirstName,
-                customer.Identity.LastName,
-                customer.Identity.PictureUrl,
-                customer.Identity.FacebookId,
-                customer.Location,
-                customer.Locale,
-                customer.Gender
+                user.FirstName, user.LastName, user.PictureUrl, user.FacebookId
+                //customer.Identity.FirstName,
+                //customer.Identity.LastName,
+                //customer.Identity.PictureUrl,
+                //customer.Identity.FacebookId,
+                //customer.Location,
+                //customer.Locale,
+                //customer.Gender
             });
-        }*/
+        }
     }
 }

@@ -3,7 +3,7 @@
     <q-layout-header>
       <q-toolbar
         color="primary"
-        :glossy="$q.theme === 'mat'"
+        :glossy="!$q.theme === 'mat'"
         :inverted="$q.theme === 'ios'"
       >
         <q-btn
@@ -19,6 +19,7 @@
           Quasar App
           <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
         </q-toolbar-title>
+        <login></login>
       </q-toolbar>
     </q-layout-header>
 
@@ -41,10 +42,8 @@
             <q-item-side icon="info_outline" />
             <q-item-main label="About" />
           </q-item>
-          <q-item to="/login">
-            <q-item-side icon="info_outline" />
-            <q-item-main label="Login" />
-          </q-item>
+          
+
           <q-item-separator />
           <q-list-header>Essential Links</q-list-header>
           <q-item @click.native="openURL('http://quasar-framework.org')">
@@ -68,14 +67,18 @@
     </q-layout-drawer>
 
     <q-page-container>
+      <transition  name="fade" mode="out-in">
       <router-view />
+      </transition>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
 import { openURL } from "quasar";
-
+import { mapGetters } from "vuex";
+import { EventBus } from ".././event-bus";
+import Login from "../components/LoginComponent";
 export default {
   name: "LayoutDefault",
   data() {
@@ -83,11 +86,36 @@ export default {
       leftDrawerOpen: this.$q.platform.is.desktop
     };
   },
+  computed: {
+    ...mapGetters({
+      isAuthenticated: "auth/isAuthenticated",
+      profile: "user/profile"
+    })
+  },
   methods: {
     openURL
+  },
+  created() {
+    EventBus.$on("logged-in", payLoad => {
+      // this doesn't currently do anything in this demo but does get fired on successful login.
+      // leaving it here to show how to allow communication between unrelated components - ie. Store -> Component
+      console.log("logged-in message received...");
+    });
+  },
+  destroyed() {
+    EventBus.$off("logged-in");
+  },
+  components: {
+    Login
   }
 };
 </script>
 
 <style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

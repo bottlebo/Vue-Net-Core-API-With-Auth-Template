@@ -1,38 +1,44 @@
 <template>
     <section class="section">
-      <div class="container has-text-centered">
-        <div class="column is-4 is-offset-4">
-          <h3 class="title has-text-grey">Login</h3>
-          <p class="subtitle has-text-grey">Please login to proceed</p>         
-          <article class="message is-success" v-if="$route.query.new">
-          <div class="message-body">
+      <!-- <article class="message is-success" v-if="$route.query.new">
+        <div class="message-body">
             <strong>You're all set {{$route.query.firstName}}!</strong> Login with your password to continue.
-          </div>
-          </article>
-          <div class="box">          
-            <form @submit.prevent="handleSubmit">
-              <div class="field">
-                <div class="control">
-                  <input class="input is-large" type="email" placeholder="Email" autofocus="" v-model="credentials.userName">
-                </div>
-              </div>
-              <div class="field">
-                <div class="control">
-                  <input class="input is-large" type="password" placeholder="Password" v-model="credentials.password">
-                </div>
-              </div>
+        </div>
+      </article> -->
+      <div class="box">    
+        <form @submit.prevent="handleSubmit">
+        <q-card class="shadow-6">
+          <q-card-title>
+            Login
+            <span slot="subtitle">Please login to proceed</span>
+          </q-card-title>
+          <q-card-separator />
+          <q-card-main>
+
+              <q-input float-label="Login"  v-model="credentials.userName" type="text" />
+              <q-input float-label="Password" type="password"  v-model="credentials.password"/>
+              
+              
               <!-- <Spinner v-bind:show="isBusy" /> -->
-              <button class="button is-block is-info is-large is-fullwidth" type="submit">Login</button>
-              <div class="errors-container" v-if="errors">
+              
+
+              <div class="errors-container" v-show="errors">
                  {{errors}}
               </div>
-            </form>
+            
+            </q-card-main>
+            <q-card-separator />
+            <q-card-actions align="end">
+                <q-btn label="Login" type="submit" color="primary"/>
+                <q-btn label="Sign Up" @click="$router.push('/register')" flat  color="primary"/>
+            </q-card-actions>
+          </q-card>      
+           </form>
           </div>
-          <p class="has-text-grey">
+         <!--  <p class="has-text-grey">
              <router-link to="/register">Sign Up</router-link>
-          </p>
-        </div>
-      </div>  
+          </p> -->
+        
   </section> 
 </template>
 <script>
@@ -46,12 +52,12 @@ export default {
   },
   methods: {
     handleSubmit() {
-        console.log(this.credentials)
+      console.log(this.credentials);
       this.isBusy = true;
       this.$store
         .dispatch("auth/authRequest", this.credentials)
         .then(result => {
-          this.$router.push("/dashboard/home");
+          this.$router.push("/");
         })
         .catch(err => {
           this.errors = err;
@@ -68,3 +74,12 @@ export default {
   }
 };
 </script>
+<style>
+.box {
+  width: 400px;
+  margin: 100px auto;
+}
+.errors-container{
+  line-height: 30px;
+}
+</style>

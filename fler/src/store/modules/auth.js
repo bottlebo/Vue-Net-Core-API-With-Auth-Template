@@ -1,4 +1,5 @@
 import { authService } from '../../services/auth.service';
+import { EventBus } from '../../event-bus';
 //
 const state = {
     token: localStorage.getItem('auth-token') || '',
@@ -29,6 +30,13 @@ const actions = {
               reject(errors);
             });
           });
+    },
+    authLogout: ({commit, dispatch}) => {
+        return new Promise((resolve, reject) => {
+          commit('authLogout');
+          localStorage.removeItem('auth-token');
+          resolve();
+        });
     }
 };
 //
