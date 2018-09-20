@@ -31,7 +31,8 @@ import {
   QCardMain,
   QCardMedia,
   QCardSeparator,
-  QCardActions
+  QCardActions,
+  QSearch
 } from 'quasar'
 
 Vue.use(Quasar, {
@@ -53,11 +54,12 @@ Vue.use(Quasar, {
     QItemMain,
     QInput,
     QCard,
-  QCardTitle,
-  QCardMain,
-  QCardMedia,
-  QCardSeparator,
-  QCardActions
+    QCardTitle,
+    QCardMain,
+    QCardMedia,
+    QCardSeparator,
+    QCardActions,
+    QSearch
   },
   directives: {
   },

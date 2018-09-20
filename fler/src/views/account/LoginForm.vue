@@ -52,7 +52,6 @@ export default {
   },
   methods: {
     handleSubmit() {
-      console.log(this.credentials);
       this.isBusy = true;
       this.$store
         .dispatch("auth/authRequest", this.credentials)

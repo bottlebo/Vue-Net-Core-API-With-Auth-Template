@@ -16,8 +16,9 @@ const actions = {
           commit('userSuccess', result);
         },
       (errors) => {
+          console.log(errors)
         commit('userError');
-        dispatch('auth/authLogout', null, { root: true });
+        //dispatch('auth/authLogout', null, { root: true });
       });
     },
 };

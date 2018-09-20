@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr lFf">
     <q-layout-header>
       <q-toolbar
         color="primary"
@@ -15,10 +15,13 @@
           icon="menu"
         />
 
-        <q-toolbar-title>
-          Quasar App
+        <q-toolbar-title >
+          <div>Quasar App</div>
           <div slot="subtitle">Running on Quasar v{{ $q.version }}</div>
+          
         </q-toolbar-title>
+        
+        <div>123</div>
         <login></login>
       </q-toolbar>
     </q-layout-header>
@@ -67,6 +70,7 @@
     </q-layout-drawer>
 
     <q-page-container>
+     
       <transition  name="fade" mode="out-in">
       <router-view />
       </transition>
@@ -83,7 +87,8 @@ export default {
   name: "LayoutDefault",
   data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.$q.platform.is.desktop,
+      search:''
     };
   },
   computed: {
