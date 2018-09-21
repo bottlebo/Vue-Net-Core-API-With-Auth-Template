@@ -96,7 +96,7 @@ namespace API
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
-                options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Manager"));
             });
 
             // add identity
@@ -132,24 +132,27 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseExceptionHandler(
-                builder =>
-                {
-                    builder.Run(
-                        async context =>
-                        {
-                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                            context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            //app.UseExceptionHandler(
+            //    builder =>
+            //    {
+            //        builder.Run(
+            //            async context =>
+            //            {
+            //                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            //                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
-                            var error = context.Features.Get<IExceptionHandlerFeature>();
-                            if (error != null)
-                            {
-                                context.Response.AddApplicationError(error.Error.Message);
-                                await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
-                            }
-                        });
-                });
+            //                var error = context.Features.Get<IExceptionHandlerFeature>();
+            //                if (error != null)
+            //                {
+            //                    context.Response.AddApplicationError(error.Error.Message);
+            //                    await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
+            //                }
+            //            });
+            //    });
+            app.UseExceptionHandler("/errors/500");
 
+            // Handles non-success status codes with empty body
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseCors("AllowAll");
 
