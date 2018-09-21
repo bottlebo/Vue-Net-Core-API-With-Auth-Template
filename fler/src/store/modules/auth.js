@@ -1,5 +1,4 @@
 import { authService } from '../../services/auth.service';
-//import { adminService } from '../../services/admin.service';
 import { EventBus } from '../../event-bus';
 //
 const state = {
@@ -19,6 +18,7 @@ const actions = {
             commit('authRequest');
             authService.login(credentials)
             .subscribe((result) => {
+                //console.log(parseJwt(result))
               localStorage.setItem('auth-token', result); // stash the auth token in localStorage
               commit('authSuccess', result);
               EventBus.$emit('logged-in', null);
@@ -41,6 +41,11 @@ const actions = {
     }
 };
 //
+const parseJwt=(token)=> {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+};
 const mutations = {
     authRequest: (authState) => {
         authState.status = 'attempting authentication request';

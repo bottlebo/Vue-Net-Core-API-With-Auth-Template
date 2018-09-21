@@ -6,6 +6,7 @@
         </div>
       </article> -->
       <div class="box">    
+        {{$route.query.redirect}}
         <form @submit.prevent="handleSubmit">
         <q-card class="shadow-6">
           <q-card-title>
@@ -56,7 +57,8 @@ export default {
       this.$store
         .dispatch("auth/authRequest", this.credentials)
         .then(result => {
-          this.$router.push("/");
+          //console.log(this.$route.query.redirect)
+          this.$router.push(this.$route.query.redirect?this.$route.query.redirect : "/");
         })
         .catch(err => {
           this.errors = err;

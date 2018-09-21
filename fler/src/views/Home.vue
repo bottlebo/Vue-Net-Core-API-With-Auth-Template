@@ -24,9 +24,8 @@
  </div>
      <div class="row" style="padding-top:10px">
         <div class="col-1" style="width:240px;">
-       <div style=" height:49px; line-height:49px;background-color: #F9F3EF">
-       <span style="font-weight: 700;font-size: 16px;margin-right: 16px; color:#333">Категории</span>
-       </div>
+     
+       <categories/>
         </div>
         <div class="col">
           <div style=" height:49px; line-height:49px;background-color: #F9F3EF"></div>
@@ -42,13 +41,16 @@
 </style>
 
 <script>
-
+import Categories from "../components/Categories"
 export default {
   name: 'PageHome',
   data(){
     return {
       search:''
     }
+  },
+  components: {
+    Categories
   }
 }
 </script>

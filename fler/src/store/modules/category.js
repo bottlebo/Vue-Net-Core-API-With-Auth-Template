@@ -1,12 +1,28 @@
 import Vue from 'vue';
 
 const _categories = [
-    { id: 1, Name: "Телевизоры", hasChild: true, companyId: 1 },
-    { id: 2, Name: "Телевизоры LED", hasChild: false, parentID: 1, companyId: 1 },
-    { id: 3, Name: "Телевизоры PLAZMA", hasChild: false, parentID: 1, companyId: 1 },
+    { id: 1, Name: "Fashion & Accessories", parentId:null },
+    { id: 2, Name: "Jewelry ", parentId: null },
+    { id: 3, Name: "Home & Living", parentId: null },
+
+    { id: 4, Name: "Health & Beauty", parentId:null },
+
+    { id: 5, Name: "For her",  parentId: 1 },
+    { id: 6, Name: "For him",  parentId: 1 },
+    { id: 7, Name: "Baby & kids",  parentId: 1 },
     //
-    { id: 4, Name: "Кофеварки", hasChild: true, companyId: 2 },
-    { id: 5, Name: "Esspresso", hasChild: false, parentID: 4, companyId: 2 },
+    { id: 8, Name: "Clothing",  parentId: 5 },
+    { id: 9, Name: "Bags",  parentId: 5 },
+    { id: 10, Name: "Purses",  parentId: 5 },
+    { id: 11, Name: "Shoes",  parentId: 5 },
+    { id: 12, Name: "Cases",  parentId: 5 },
+    //
+    { id: 13, Name: "Dresses ",  parentId: 8 },
+    { id: 14, Name: "Skirts",  parentId: 8 },
+    { id: 15, Name: "Tops",  parentId: 8 },
+    { id: 16, Name: "Trousers & Shorts",  parentId: 8 },
+    { id: 17, Name: "Jackets & Coats",  parentId: 8 },
+    { id: 18, Name: "Others",  parentId: 8 },
 ]
 const state = {
     all:[],
@@ -15,7 +31,8 @@ const state = {
 
 const getters = {
     categories: state => state.all,
-    selectedId: state => state.selectedId
+    selectedId: state => state.selectedId,
+    top: state => state.all.filter(c=>c.parentId==null)
 };
 
 const actions = {
