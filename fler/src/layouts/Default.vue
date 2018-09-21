@@ -26,7 +26,7 @@
       </q-toolbar>
     </q-layout-header>
 
-    <q-layout-drawer
+   <!--  <q-layout-drawer
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
     >
@@ -67,13 +67,16 @@
           </q-item>
         </q-list>
       </q-list>
-    </q-layout-drawer>
+    </q-layout-drawer> -->
 
     <q-page-container>
-     
+     <router-link to="/" >Home</router-link>&nbsp;
+     <router-link to="/about" >About</router-link>
+     <router-link to="/admin" >Admin</router-link>
       <transition  name="fade" mode="out-in">
       <router-view />
       </transition>
+
     </q-page-container>
   </q-layout>
 </template>
@@ -83,6 +86,7 @@ import { openURL } from "quasar";
 import { mapGetters } from "vuex";
 import { EventBus } from ".././event-bus";
 import Login from "../components/LoginComponent";
+
 export default {
   name: "LayoutDefault",
   data() {
@@ -106,6 +110,7 @@ export default {
       // leaving it here to show how to allow communication between unrelated components - ie. Store -> Component
       console.log("logged-in message received...");
     });
+    this.$store.dispatch('category/categoryRequest')
   },
   destroyed() {
     EventBus.$off("logged-in");

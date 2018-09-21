@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import DefaultLayout from './layouts/Default.vue'
+import AdminLayout from './layouts/Admin.vue'
+
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import LoginForm from './views/account/LoginForm.vue';
+import AdminHome from './views/admin/AdminHome.vue'
 import store from './store';
 Vue.use(Router)
 
@@ -31,6 +34,19 @@ const router = new Router({
           component: LoginForm
         }
       ]
+    },
+    {
+    path:'/admin',
+    component: AdminLayout,
+    children:[
+      {
+        path:'/',
+        name:'admin',
+        component: AdminHome,
+        meta: { requiresAuth: true }
+
+      }
+    ]
     }
   ]
 })

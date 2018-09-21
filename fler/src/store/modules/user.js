@@ -16,11 +16,14 @@ const actions = {
           commit('userSuccess', result);
         },
       (errors) => {
-          console.log(errors)
+          //console.log(errors)
         commit('userError');
         //dispatch('auth/authLogout', null, { root: true });
       });
     },
+    set: ({commit}, profile) => {
+        commit('userSuccess', profile);
+    }
 };
 
 const mutations = {

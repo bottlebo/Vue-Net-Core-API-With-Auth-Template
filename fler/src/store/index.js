@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './modules/auth';
 import user from './modules/user';
+import category from './modules/category';
+
 import createLogger from 'vuex/dist/logger';
 
 Vue.use(Vuex)
@@ -32,6 +34,13 @@ export default new Vuex.Store({
       actions: user.actions,
       mutations: user.mutations,
       getters: user.getters,
+  },
+  category:{
+    namespaced: true,
+    state: category.state,
+    actions: category.actions,
+    mutations: category.mutations,
+    getters: category.getters
   }
   }
 })

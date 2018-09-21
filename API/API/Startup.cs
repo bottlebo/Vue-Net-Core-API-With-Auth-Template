@@ -77,7 +77,8 @@ namespace API
 
                 RequireExpirationTime = false,
                 ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
+                ClockSkew = TimeSpan.Zero,
+                RoleClaimType = System.Security.Claims.ClaimsIdentity.DefaultRoleClaimType
             };
 
             services.AddAuthentication(options =>
@@ -95,6 +96,7 @@ namespace API
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+                options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
             });
 
             // add identity

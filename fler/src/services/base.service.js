@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Rx';
-import store from '../store'
-import router from '../router'
-export class BaseService {
+//import store from '../store'
+//import router from '../router'
+export  class BaseService {
 
     api = 'http://localhost:5000/api';
 
@@ -21,8 +21,8 @@ console.log(error)
             }
           }
     }
-    if(error.status == 401)
-      store.dispatch('auth/authLogout', null, { root: true }).then(()=>{router.push("/login");});
+    //if(error.status == 401 || error.status == 403)
+      //store.dispatch('auth/authLogout', null, { root: true }).then(()=>{router.push("/login");});
     modelStateErrors = modelStateErrors = '' ? null : modelStateErrors;
     return Observable.throw(modelStateErrors || 'Server error');
   }

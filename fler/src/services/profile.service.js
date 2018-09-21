@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BaseService } from './base.service';
+import  { BaseService } from './base.service';
 import { Observable } from 'rxjs/Rx';
 
 class ProfileService extends BaseService {

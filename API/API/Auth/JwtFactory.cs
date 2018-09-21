@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -20,15 +21,18 @@ namespace API.Auth
 
         public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
         {
-            var claims = new[]
+            var claims = new List<Claim>
          {
                  new Claim(JwtRegisteredClaimNames.Sub, userName),
                  new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                  new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
                  identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol),
-                 identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.Id)
-             };
+                 identity.FindFirst(Helpers.Constants.Strings.JwtClaimIdentifiers.Id),
+                 identity.FindFirst(System.Security.Claims.ClaimsIdentity.DefaultNameClaimType)
 
+                 //identity.FindFirst(System.Security.Claims.ClaimsIdentity.DefaultRoleClaimType)
+             };
+            claims.AddRange(identity.FindAll(System.Security.Claims.ClaimsIdentity.DefaultRoleClaimType));
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
                 issuer: _jwtOptions.Issuer,
@@ -43,13 +47,29 @@ namespace API.Auth
             return encodedJwt;
         }
 
-        public ClaimsIdentity GenerateClaimsIdentity(string userName, string id)
+        public ClaimsIdentity GenerateClaimsIdentity(string userName, List<string> userRoles, string id)
         {
-            return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
+            var claims = new List<Claim>
+                {
+                    new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Id, id),
+                    new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess),
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                    //new Claim(ClaimsIdentity.DefaultRoleClaimType, "Admin"),
+                    //new Claim(ClaimsIdentity.DefaultRoleClaimType, "Manager")
+
+                };
+            foreach(var role in userRoles)
             {
-                new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Id, id),
-                new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess)
-            });
+                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, role));
+            }
+            var claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                    ClaimsIdentity.DefaultRoleClaimType);
+            return claimsIdentity;
+            //return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
+            //{
+            //    new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Id, id),
+            //    new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, Helpers.Constants.Strings.JwtClaims.ApiAccess)
+            //});
         }
 
         /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>

@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(Roles = "Manager")]
     public class ValuesController : ControllerBase
     {
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            List<string> res = new List<string>();
+
+            foreach(var claim in User.Claims)
+            {
+                res.Add(claim.Type + ":" + claim.Value);
+            }
+            return res;// new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
