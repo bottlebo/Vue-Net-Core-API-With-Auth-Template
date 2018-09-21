@@ -7,7 +7,7 @@ export  class BaseService {
 
     handleError(error) {
     const applicationError = error.headers['Application-Error'];
-console.log(error)
+//console.log(error.data.statusCode)
     if (applicationError) {
         return Observable.throw(applicationError);
     }
@@ -23,7 +23,7 @@ console.log(error)
     }
     //if(error.status == 401 || error.status == 403)
       //store.dispatch('auth/authLogout', null, { root: true }).then(()=>{router.push("/login");});
-    modelStateErrors = modelStateErrors = '' ? null : modelStateErrors;
-    return Observable.throw(modelStateErrors || 'Server error');
+    modelStateErrors = error.data.statusCode ?  error.data.statusCode :500;
+    return Observable.throw(modelStateErrors);
   }
 }

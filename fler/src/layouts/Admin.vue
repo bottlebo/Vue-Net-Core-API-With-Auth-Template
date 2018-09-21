@@ -61,10 +61,11 @@ export default {
           this.$store.dispatch('user/set', result)
           //commit('userSuccess', result);
         },
-      (errors) => {
-          //console.log(errors)
+      (errorCode) => {
+          console.log(errorCode)
         //commit('userError');
-        //dispatch('auth/authLogout', null, { root: true });
+        if(errorCode == 401 || errorCode == 403)
+          this.$store.dispatch('auth/authLogout', null, { root: true }).then(()=> this.$router.push('/login'));
       }); 
   },
   components: {

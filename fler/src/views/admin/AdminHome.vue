@@ -1,8 +1,8 @@
 <template>
-  <div padding>
+  <q-page padding>
     
     <p>This is an admin page</p>
-  </div>
+  </q-page>
 </template>
 
 <script>

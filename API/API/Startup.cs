@@ -96,7 +96,7 @@ namespace API
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
-                options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Manager"));
+                options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
             });
 
             // add identity
