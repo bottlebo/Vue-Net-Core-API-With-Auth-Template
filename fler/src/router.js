@@ -23,6 +23,11 @@ const router = new Router({
           component: Home
         },
         {
+            path:'/category/:category',
+            name: 'category',
+            component: Home
+        },
+        {
           path: '/about',
           name: 'about',
           component: About,

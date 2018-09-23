@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "epic-spinners": "^1.0.3",
     "quasar-extras": "^2.0.4",
     "quasar-framework": "^0.17.0",
     "rxjs": "^6.3.2",

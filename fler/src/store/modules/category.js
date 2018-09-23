@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { categoryService } from '../../services/category.service';
 
 const _categories = [
     { id: 1, Name: "Fashion & Accessories", parentId:null },
@@ -36,8 +37,14 @@ const getters = {
 };
 
 const actions = {
-    categoryRequest:({commit}) => {
-        commit('categoryResult', _categories)
+    categoryRequest:async ({commit}) => {
+        try{
+            let categories = await categoryService.all()
+            commit('categoryResult', categories)
+        }
+        catch(error){
+
+        }
     }
 };
 

@@ -32,6 +32,7 @@ namespace AuthWebApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Post([FromBody]CredentialsViewModel credentials)
         {
+            await Task.Delay(5250);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

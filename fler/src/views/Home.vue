@@ -27,9 +27,13 @@
      
        <categories/>
         </div>
-        <div class="col">
-          <div style=" height:49px; line-height:49px;background-color: #F9F3EF"></div>
-          <q-btn label="Test" @click="$store.dispatch('user/userRequest', null, { root: true })" color="primary" />
+        <div class="col" style="padding-left:10px;">
+          <div style=" height:49px; line-height:49px;background-color: #F9F3EF">
+            {{$route.params.id}}<q-btn label="Test" @click="$store.dispatch('user/userRequest', null, { root: true })" color="primary" />
+          </div>
+          <div>
+          <products/>
+          </div>
         </div>
         <!-- <div class="col-1" style="background-color:#555; width:240px;">1</div> -->
         </div>
@@ -42,6 +46,7 @@
 
 <script>
 import Categories from "../components/Categories"
+import Products from "../components/Products"
 export default {
   name: 'PageHome',
   data(){
@@ -50,7 +55,7 @@ export default {
     }
   },
   components: {
-    Categories
+    Categories, Products
   }
 }
 </script>

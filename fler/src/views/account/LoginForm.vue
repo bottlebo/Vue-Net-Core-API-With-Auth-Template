@@ -21,7 +21,11 @@
               
               
               <!-- <Spinner v-bind:show="isBusy" /> -->
-              
+             <!--  <orbit-spinner v-show="isBusy"
+  :animation-duration="1200"
+  :size="55"
+  color="#ff1d5e"
+/> -->
               <div class="errors-container">
               <div v-show="errors">
                  {{errors}}
@@ -43,6 +47,14 @@
   </section> 
 </template>
 <script>
+import { OrbitSpinner } from 'epic-spinners'
+import {
+  //Loading,
+
+  // optional!, for example below
+  // with custom spinner
+  QSpinnerGears
+} from 'quasar'
 export default {
   data() {
     return {
@@ -53,7 +65,13 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.isBusy = true;
+      //this.isBusy = true;
+     /*  this.$q
+      .loading.show({
+        spinner:OrbitSpinner,
+        spinnerColor: '#ff0000',
+        delay: 400 // ms
+}) */
       this.$store
         .dispatch("auth/authRequest", this.credentials)
         .then(result => {
@@ -65,6 +83,7 @@ export default {
         })
         .then(() => {
           this.isBusy = false;
+          this.$q.loading.hide()
         });
     }
   },
@@ -72,7 +91,11 @@ export default {
     if (this.$route.query.new) {
       this.credentials.userName = this.$route.query.email;
     }
-  }
+  },
+   components: {
+     OrbitSpinner
+   }
+
 };
 </script>
 <style>

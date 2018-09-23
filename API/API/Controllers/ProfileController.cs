@@ -31,6 +31,8 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> Me()
         {
+            await Task.Delay(5250);
+
             // retrieve the user info
             var userId = _caller.Claims.Single(c => c.Type == "id");
             //var customer = await _appDbContext.Customers.Include(c => c.Identity).SingleAsync(c => c.Identity.Id == userId.Value);

@@ -26,11 +26,14 @@ namespace API.Data
                 }
             }
             var admin = await usermanager.FindByNameAsync("admin");
-            if(admin == null)
+            if (admin == null)
             {
                 var _admin = new AppUser
                 {
-                    UserName = "admin", Email = "admin@fler.com", FirstName="admin", LastName=""
+                    UserName = "admin",
+                    Email = "admin@fler.com",
+                    FirstName = "admin",
+                    LastName = ""
                 };
                 var result = await usermanager.CreateAsync(_admin, "1234567890");
                 if (result.Succeeded)
@@ -40,26 +43,80 @@ namespace API.Data
             }
             else
             {
-                if (! await usermanager.IsInRoleAsync(admin, "Admin"))
+                if (!await usermanager.IsInRoleAsync(admin, "Admin"))
                 {
                     await usermanager.AddToRoleAsync(admin, "Admin");
                 }
             }
 
-            //if (!context.Сurrencies.Any())
-            //{
-            //    context.Сurrencies.Add(new Models.Currency { Name = "Bitcoin", ShortName = "BTC" });
+            if (!context.Categories.Any())
+            {
+                context.Categories.Add(new Category { Name = "Fashion & Accessories", Route = "fashion", parentId = null });
+                context.Categories.Add(new Category { Name = "Jewelry", Route = "jewelry", parentId = null });
+                context.Categories.Add(new Category { Name = "Home & Living", Route = "home", parentId = null });
+                context.Categories.Add(new Category { Name = "Health & Beauty", Route = "health", parentId = null });
+                context.Categories.Add(new Category { Name = "Special occasion", Route = "occasion", parentId = null });
+                context.Categories.Add(new Category { Name = "Material for creation", Route = "material", parentId = null });
 
-            //    context.Сurrencies.Add(new Models.Currency { Name = "Litecoin", ShortName = "LTC" });
-            //    context.Сurrencies.Add(new Models.Currency { Name = "Ethereum", ShortName = "ETH" });
-            //    context.Сurrencies.Add(new Models.Currency { Name = "Ripple", ShortName = "XPR" });
-            //    context.Сurrencies.Add(new Models.Currency { Name = "Cardano", ShortName = "ADA" });
-            //    context.Сurrencies.Add(new Models.Currency { Name = "Monero", ShortName = "XMR" });
-            //    context.Сurrencies.Add(new Models.Currency { Name = "Ethereum Classic", ShortName = "ETC" });
-            //    context.Сurrencies.Add(new Models.Currency { Name = "Bitcoin Gold", ShortName = "BTG" });
+                context.SaveChanges();
 
-            //    context.SaveChanges();
-            //}
+                //Fashion & Accessories
+                context.Categories.Add(new Category { Name = "For her", Route = "forher", parentId = context.Categories.Where(c => c.Route == "fashion").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "For him", Route = "forhim", parentId = context.Categories.Where(c => c.Route == "fashion").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Baby & kids", Route = "baby", parentId = context.Categories.Where(c => c.Route == "fashion").SingleOrDefault().Id });
+
+                //Jewelry
+                context.Categories.Add(new Category { Name = "Necklaces", Route = "necklaces", parentId = context.Categories.Where(c => c.Route == "jewelry").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Bracelets", Route = "bracelets", parentId = context.Categories.Where(c => c.Route == "jewelry").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Rings", Route = "rings", parentId = context.Categories.Where(c => c.Route == "jewelry").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Earrings", Route = "earrings", parentId = context.Categories.Where(c => c.Route == "jewelry").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Pendants", Route = "pendants", parentId = context.Categories.Where(c => c.Route == "jewelry").SingleOrDefault().Id });
+
+                context.SaveChanges();
+
+                //For her;
+                context.Categories.Add(new Category { Name = "Clothing", Route = "womenclothing", parentId = context.Categories.Where(c => c.Route == "forher").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Bags", Route = "womenbags", parentId = context.Categories.Where(c => c.Route == "forher").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Purses", Route = "womenpurses", parentId = context.Categories.Where(c => c.Route == "forher").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Shoes", Route = "womenshoes", parentId = context.Categories.Where(c => c.Route == "forher").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Cases", Route = "womencases", parentId = context.Categories.Where(c => c.Route == "forher").SingleOrDefault().Id });
+                context.SaveChanges();
+
+                //Clothing
+                context.Categories.Add(new Category { Name = "Dresses", Route = "dresses", parentId = context.Categories.Where(c => c.Route == "womenclothing").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Skirts", Route = "skirts", parentId = context.Categories.Where(c => c.Route == "womenclothing").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Tops", Route = "tops", parentId = context.Categories.Where(c => c.Route == "womenclothing").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Trousers & Shorts", Route = "trousers", parentId = context.Categories.Where(c => c.Route == "womenclothing").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Jackets & Coats", Route = "jackets", parentId = context.Categories.Where(c => c.Route == "womenclothing").SingleOrDefault().Id });
+
+                //Bags
+                context.Categories.Add(new Category { Name = "Handbags", Route = "womanhandbags", parentId = context.Categories.Where(c => c.Route == "womenbags").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Cross body & shoulder Bags", Route = "womancrossbody", parentId = context.Categories.Where(c => c.Route == "womenbags").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Cosmetic bags & pouches", Route = "womancosmeticbags", parentId = context.Categories.Where(c => c.Route == "womenbags").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Clutches", Route = "womanclutches", parentId = context.Categories.Where(c => c.Route == "womenbags").SingleOrDefault().Id });
+
+                //Purses
+                context.Categories.Add(new Category { Name = "Leather purses", Route = "womanleatherpurses", parentId = context.Categories.Where(c => c.Route == "womenpurses").SingleOrDefault().Id });
+                context.Categories.Add(new Category { Name = "Coin purses", Route = "womancoinpurses", parentId = context.Categories.Where(c => c.Route == "womenpurses").SingleOrDefault().Id });
+
+
+
+                context.SaveChanges();
+
+
+            }
+            if (!context.Products.Any())
+            {
+                var _category = context.Categories.Where(c => c.Route == "dresses").SingleOrDefault();
+                if (_category != null)
+                {
+                    var _product = new Product { Name = "Вариант коктейльного платья для коктейльного вечера", Category = _category };
+                    _product.Images = new List<Image>();
+                    _product.Images.Add(new Image { Url = "1.jpg" });
+                    context.Products.Add(_product);
+                    context.SaveChanges();
+                }
+            }
 
         }
     }
