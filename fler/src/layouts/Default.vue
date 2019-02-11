@@ -104,7 +104,9 @@ export default {
   methods: {
     openURL
   },
-  created() {
+        created() {
+            console.log(process.env)
+
     EventBus.$on("logged-in", payLoad => {
       // this doesn't currently do anything in this demo but does get fired on successful login.
       // leaving it here to show how to allow communication between unrelated components - ie. Store -> Component

@@ -3,8 +3,7 @@ import axios from 'axios';
 //import store from '../store'
 //import router from '../router'
 export class BaseService {
-
-  api = 'http://localhost:5000/api';
+ api = process.env.VUE_APP_API;
 
   handleError(error) {
     const applicationError = error.headers['Application-Error'];

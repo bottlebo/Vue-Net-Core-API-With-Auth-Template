@@ -159,6 +159,7 @@ namespace API
             app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.Map("/a", action => { });
             app.UseMvc();
         }
     }
